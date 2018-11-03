@@ -27,7 +27,7 @@ from sklearn.metrics import classification_report, accuracy_score, precision_sco
 
 def load_data(database_filepath):
     # load data from database
-    engine = create_engine('sqlite:///InsertDatabaseName.db')
+    engine = create_engine('sqlite:///../data/DisasterResponse.db')
     df = pd.read_sql_table('clean_all', con=engine)
     
     X = df['message'].values
@@ -66,8 +66,15 @@ def build_model():
         ('tfidf', TfidfTransformer()),
         ('clf', MultiOutputClassifier(RandomForestClassifier(class_weight='balanced')))
     ])
+
+    params = {
+        'clf__estimator__n_estimators':[10, 50], 
+        'clf__estimator__min_samples_split': [2, 4]            
+    }
+
+    cv = GridSearchCV(pipeline, param_grid=params, verbose=2, n_jobs=4)
     
-    return pipeline
+    return cv
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
