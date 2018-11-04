@@ -25,8 +25,8 @@ Our job, is to define a machine learning problem, to classify thousands of messa
 
 ## Examples:
 
-<img src="https://github.com/Bato803/Data-Scientist-Nanodegree/blob/master/Disaster%20Response%20Pipeline/images/sample01.png" width = 650, height=300>
+<img src="https://github.com/Bato803/Data-Scientist-Nanodegree/blob/master/Disaster%20Response%20Pipeline/images/sample01.png" width = 650, height=600>
 
-<img src="https://github.com/Bato803/Data-Scientist-Nanodegree/blob/master/Disaster%20Response%20Pipeline/images/sample02.png" width=650, height=300>
+<img src="https://github.com/Bato803/Data-Scientist-Nanodegree/blob/master/Disaster%20Response%20Pipeline/images/sample02.png" width=650, height=600>
 
-<img src="https://github.com/Bato803/Data-Scientist-Nanodegree/blob/master/Disaster%20Response%20Pipeline/images/graph.png" width=650, height=300>
+<img src="https://github.com/Bato803/Data-Scientist-Nanodegree/blob/master/Disaster%20Response%20Pipeline/images/graph.png" width=650, height=600>
