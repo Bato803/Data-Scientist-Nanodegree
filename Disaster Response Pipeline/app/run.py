@@ -16,6 +16,7 @@ from sqlalchemy import create_engine
 app = Flask(__name__)
 
 def tokenize(text):
+
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
 
@@ -39,6 +40,12 @@ model = joblib.load("../models/classifier.pkl")
 @app.route('/index')
 
 def index():
+    """
+    Visualize clean data using plotly library. 
+    Dataframe is processed first to obtain targeted values. 
+    
+    Histogram and heatmap of categories are generated. 
+    """
     
     # extract data needed for visuals
     # TODO: Below is an example - modify to extract data for your own visuals
