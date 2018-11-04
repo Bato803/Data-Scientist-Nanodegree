@@ -52,7 +52,7 @@ def save_data(df, database_filename):
     """
 
     engine = create_engine('sqlite:///{0}'.format(database_filename))
-    df.to_sql('disaster', engine, index=False)
+    df.to_sql('clean_all', engine, index=False)
 
 
 def main():
