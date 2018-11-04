@@ -26,6 +26,10 @@ from sklearn.metrics import classification_report, accuracy_score, precision_sco
 
 
 def load_data(database_filepath):
+    """
+    Input: SQLite database. 
+    Qutput: Message values, Category values and Category name. 
+    """
     # load data from database
     engine = create_engine('sqlite:///../data/DisasterResponse.db')
     df = pd.read_sql_table('clean_all', con=engine)
@@ -37,6 +41,12 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
+    """
+    Tokenize a given text by performing url removal, text normalization, 
+    splitting text into words, removing words that appears frequently while 
+    having little contextual meaning (stop words), and lemmatization. 
+    """
+
     # url re expression, credit: https://www.geeksforgeeks.org/python-check-url-string/
     url_re = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\), ]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
     urls = re.findall(url_re, text)
@@ -61,6 +71,11 @@ def tokenize(text):
 
 
 def build_model():
+    """
+    Build a machine learning model with sklearn pipeline object. 
+    Optimize the model using grid search. 
+    """
+
     pipeline = Pipeline([
         ('vec', CountVectorizer(tokenizer=tokenize)),
         ('tfidf', TfidfTransformer()),
@@ -78,6 +93,11 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    """
+    Compare prediction with ground truth using accuracy, 
+    recall and f1-score as metrics. 
+    """
+
     cats = category_names
     y_pred = model.predict(X_test)
     y_true = Y_test.values
@@ -102,6 +122,10 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    """
+    Save model with python pickle library. 
+    """
+
     pickle.dump(model, open(model_filepath, 'wb'))
 
 

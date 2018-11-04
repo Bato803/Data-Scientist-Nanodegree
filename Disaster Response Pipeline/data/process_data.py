@@ -3,6 +3,11 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 def load_data(messages_filepath, categories_filepath):
+    """
+    Input: (path_to_messages_csv, path_to_categories_csv)
+    Output: Dataframe merged from messages and categories. 
+    
+    """
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
     df = messages.merge(categories, on='id')
@@ -10,6 +15,16 @@ def load_data(messages_filepath, categories_filepath):
     return df
 
 def clean_data(df):
+    """
+    Input: Dataframe from function load_data. 
+    Output: cleaned data. 
+
+    This function is used to drop duplicates, as well as 
+    splitting categories and use either 0 or 1 to represent
+    whether a specific message falls into that category. 
+    
+    """
+
     categories = df['categories'].str.split(';', expand=True)
     
     row = categories.iloc[0]
@@ -31,6 +46,11 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
+    """
+    Input: (dataframe from function "clean_data", output name of this function)
+    Output: An SQLite database.     
+    """
+
     engine = create_engine('sqlite:///{0}'.format(database_filename))
     df.to_sql('disaster', engine, index=False)
 
