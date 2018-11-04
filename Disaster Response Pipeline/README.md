@@ -22,3 +22,11 @@ Our job, is to define a machine learning problem, to classify thousands of messa
 - data/process\_data.py: Clean and process dataset into a format that's friendly to Machine Learning pipeline.  
 - models/train\_classifier.py: Train a machine learning algorithm to learn from the data output by 'process\_data.py', evaluate and output the model into pickle file. 
 - run.py: The file users need to run in order to start the web app.  
+
+## Examples:
+
+<img src="https://github.com/Bato803/Data-Scientist-Nanodegree/blob/master/Disaster%20Response%20Pipeline/images/sample01.png" width = 650, height=300>
+
+<img src="https://github.com/Bato803/Data-Scientist-Nanodegree/blob/master/Disaster%20Response%20Pipeline/images/sample02.png" width=650, height=300>
+
+<img src="https://github.com/Bato803/Data-Scientist-Nanodegree/blob/master/Disaster%20Response%20Pipeline/images/graph.png" width=650, height=300>
