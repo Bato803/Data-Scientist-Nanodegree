@@ -7,7 +7,8 @@ from nltk.tokenize import word_tokenize
 
 from flask import Flask
 from flask import render_template, request, jsonify
-from plotly.graph_objs import Bar
+from sqlalchemy import create_engine
+from plotly.graph_objs import Bar, Heatmap, Histogram
 from sklearn.externals import joblib
 from sqlalchemy import create_engine
 
@@ -27,7 +28,7 @@ def tokenize(text):
 
 # load data
 engine = create_engine('sqlite:///../data/DisasterResponse.db')
-df = pd.read_sql_table('disaster', engine)
+df = pd.read_sql_table('clean_all', engine)
 
 # load model
 model = joblib.load("../models/classifier.pkl")
@@ -36,12 +37,18 @@ model = joblib.load("../models/classifier.pkl")
 # index webpage displays cool visuals and receives user input text for model
 @app.route('/')
 @app.route('/index')
+
 def index():
     
     # extract data needed for visuals
     # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
+    
+    categories_values = df.iloc[:,4:].sum().values
+    categories_names = df.iloc[:,4:].columns
+
+    categories_cor = df.iloc[:,4:].corr().values
     
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
@@ -63,9 +70,44 @@ def index():
                     'title': "Genre"
                 }
             }
+        }, 
+
+        {
+            'data': [
+                Histogram(
+                    y = categories_values,
+                    x = categories_names, 
+                    name = "categories histogram",
+                    opacity=0.5
+                )
+            ],
+
+            'layout':{
+                'title': "categories histogram",
+                'yaxis': {
+                    'title': "count"    
+                }
+            }
+        }, 
+
+
+        {
+            'data': [
+                Heatmap(
+                    x = categories_names, 
+                    y = categories_names[::-1],
+                    z = categories_cor
+                )          
+                
+            ], 
+
+            'layout':{
+                'title': "Heatmap of Categories"
+            }        
         }
     ]
     
+
     # encode plotly graphs in JSON
     ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
